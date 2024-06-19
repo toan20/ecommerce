@@ -1,0 +1,393 @@
+ <body onload="startTime()">
+
+    <!-- tap on top starts-->
+    <div class="tap-top"><i data-feather="chevrons-up"></i></div>
+    <!-- tap on tap ends-->
+    <!-- page-wrapper Start-->
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+   
+      <!-- Page Header Ends                              -->
+      <!-- Page Body Start-->
+      <div class="page-body-wrapper">
+        <!-- Page Sidebar Start-->
+        <div class="sidebar-wrapper">
+          <div>
+            <div class="logo-wrapper"><a href="index.html"><img class="img-fluid for-light" src="../assets/images/logo/logo.png" alt=""><img class="img-fluid for-dark" src="../assets/images/logo/logo_dark.png" alt=""></a>
+              <div class="back-btn"><i class="fa fa-angle-left"></i></div>
+              <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid"> </i></div>
+            </div>
+            <div class="logo-icon-wrapper"><a href="index.html"><img class="img-fluid" src="../assets/images/logo/logo-icon.png" alt=""></a></div>
+            <nav class="sidebar-main">
+              <div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
+              <div id="sidebar-menu">
+                <ul class="sidebar-links" id="simple-bar">
+                  <li class="back-btn"><a href="index.html"><img class="img-fluid" src="../assets/images/logo/logo-icon.png" alt=""></a>
+                    <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
+                  </li>
+                  <li class="sidebar-main-title">
+                    <div>
+                      <a href="/admin/category">
+                      <h6 class="">Quản lý Danh Mục</h6>
+                      </a>
+                    </div>
+                  </li>
+
+                  <li class="sidebar-main-title">
+                    <div>
+                      <a href="/admin/produce">
+                    <h6>Quản Lý Sản Phẩm</h6>
+                      </a>
+                    </div>
+                  </li>
+                    <li class="sidebar-main-title">
+                    <div>
+                      <a href="/admin/account">
+                    <h6>Quản Lý Tài Khoản Admin</h6>
+                      </a>
+                    </div>
+                  </li>
+                  <li class="sidebar-main-title">
+                      <div>
+                      <a href="/admin/order">
+                    <h6>Quản Lý Đơn hàng</h6>
+                      </a>
+                    </div>
+                  </li>
+              </div>
+            </nav>
+          </div>
+        </div>
+        <!-- Page Sidebar Ends-->
+        <div class="page-body">
+          <div class="container-fluid">        
+            <div class="page-title">
+              <div class="row">
+                <div class="col-12">
+                  <h3>Quản lý tài khoản</h3>
+                </div>
+            
+ <div class="row m-0">
+        <div class="col-12 p-0">    
+          <div class="login-card">
+            <div>
+              <div class="login-main"> 
+                <form id="form-register"  class="theme-form ">
+                  <h4>Tạo tài khoản</h4>
+                  <div class="form-group">
+                   <label class="col-form-label">Tên người dùng</label>
+                    <input id="fullname" class="form-control" type="text" required="" placeholder="Nhập vào tên người dùng">
+                    <p class="form-message"></p>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-form-label">Địa chỉ Email</label>
+                    <input id="email" class="form-control" type="email" required="" placeholder="Test@gmail.com">
+                    <p class="form-message"></p>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-form-label">Mật khẩu</label>
+                    <div class="form-input position-relative">
+                      <input id="password" class="form-control" type="password"  name="login[password]" required="" placeholder="*********">
+                      <p class="form-message"></p>
+                      <div class="show-hide"><span class="show"></span></div>
+                    </div>
+                  </div>
+                   <div class="form-group">
+                    <label class="col-form-label">Nhập lại mật khẩu</label>
+                    <div class="form-input position-relative">
+                      <input id="password_confirmation" class="form-control" type="password" name="login[password]"  required="" placeholder="*********">
+                      <p class="form-message"></p>
+                      <div class="show-hide"><span class="show"></span></div>
+                    </div>
+                  </div>
+                  <div class="form-group mb-0">
+                    <button class="btn btn-primary btn-block w-100 btnCreate form-submid" type="submit">Tạo tài khoản</button>
+                  </div>
+                  <h6 class="text-muted mt-4 or">Or signup with</h6>
+                  <div class="social mt-4">
+                    <div class="btn-showcase"><a class="btn btn-light" href="https://www.linkedin.com/login" target="_blank"><i class="txt-linkedin" data-feather="linkedin"></i> LinkedIn </a><a class="btn btn-light" href="https://twitter.com/login?lang=en" target="_blank"><i class="txt-twitter" data-feather="twitter"></i>twitter</a><a class="btn btn-light" href="https://www.facebook.com/" target="_blank"><i class="txt-fb" data-feather="facebook"></i>facebook</a></div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+               <div class="col-12 mt-5">
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tên người dùng</th>
+                        <th scope="col">Địa chỉ Email</th>
+                        <th scope="col">Tình trạng</th>
+                        <th scope="col">Xử Lý</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listAccount">
+                      
+
+                    </tbody>
+                </table>
+               </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal"id="deleteModal"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xóa danh mục</h5>
+                    <button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có chắc chắn xóa không ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Thoát</button>
+                    <button type="button" class="btn btn-danger btn-delete" data-bs-dismiss="modal">Xóa</button>
+                </div>
+                </div>
+            </div>
+        </div>
+  </body>
+  <script>
+
+ 
+ document.addEventListener("DOMContentLoaded",function(){
+  var id
+  var btnDeteleModal = document.querySelector(".btn-delete")
+
+  // Xử lý form
+  function Validator(option) {
+  const formElement = document.getElementById(option.form);
+  function validate(inputElement, rulle) {
+    var errorMessage = rulle.test(inputElement.value);
+    var errorElement = inputElement.parentElement.querySelector(".form-message");
+    if (errorMessage) {
+      errorElement.innerText = errorMessage;
+      errorElement.style.color = "red";
+      inputElement.style.borderColor = "red";
+    } else {
+      errorElement.innerText = " ";
+      inputElement.style.borderColor = "green";
+    }
+    return errorMessage;
+  }
+
+  if (formElement) {
+    formElement.onsubmit = function (e) {
+      e.preventDefault();
+      var isError = true;
+      option.rulles.forEach(function (rulle) {
+        var inputElement = formElement.querySelector(rulle.selection);
+        var isVlaid = validate(inputElement, rulle);
+        if (isVlaid) {
+          // console.log(isVlaid);
+          isError = false;
+        }
+      });
+      if (isError) {
+         var data = {
+          username: document.querySelector("#fullname").value,
+          email: document.querySelector("#email").value.toLowerCase(),
+          password: document.querySelector("#password").value,
+        };
+        $.ajax({
+          url: '/admin/account/create',
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify(data),
+          success: function(response) {
+            toastr.success('Tạo tài khoản thành công')
+            loadListAccount()
+            document.querySelector("#fullname").value = ""
+            document.querySelector("#email").value = ""
+            document.querySelector("#password").value = ""
+            document.querySelector("#password_confirmation").value = ""
+          },
+          error: function(xhr) {
+            const error = xhr.responseJSON ? xhr.responseJSON.message : 'An error occurred';
+            toastr.error(error, 'Gặp lỗi!')
+          }
+      });
+       
+      } else {
+      }
+    };
+    option.rulles.forEach(function (rulle) {
+      var inputElement = formElement.querySelector(rulle.selection);
+      if (inputElement) {
+        inputElement.onblur = function () {
+          // console.log(inputElement);
+          validate(inputElement, rulle);
+        };
+      }
+    });
+  }
+}
+Validator.isRequỉed = function (selection) {
+  return {
+    selection: selection,
+    test: function (value) {
+      if (value) {
+        return undefined;
+      } else {
+        return "Vui lòng nhập trường này";
+      }
+    },
+  };
+};
+Validator.isEmail = function (selection) {
+  return {
+    selection: selection,
+    test: function (value) {
+      var regex =
+        /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+      if (regex.test(value)) {
+        return undefined;
+      } else {
+        return "Trường này nhập Email";
+      }
+    },
+  };
+};
+Validator.minLenght = function (selection, min) {
+  return {
+    selection: selection,
+    test: function (value) {
+      if (value.length >= min) {
+        return undefined;
+      } else {
+        return `Vui lòng nhập ${min} ký tự`;
+      }
+    },
+  };
+};
+Validator.isConfirmed = function (selection, getConfirmValue) {
+  return {
+    selection: selection,
+    test: function (value) {
+      if (value === getConfirmValue()) {
+        return undefined;
+      } else {
+        return "Mật khẩu không trùng nhau";
+      }
+    },
+  };
+};
+Validator({
+  form: "form-register",
+  rulles: [
+    Validator.isRequỉed("#fullname"),
+    Validator.isEmail("#email"),
+    Validator.minLenght("#password", 6),
+    Validator.isConfirmed("#password_confirmation", function () {
+      return document.querySelector("#password").value;
+    }),
+  ],
+});
+ 
+  loadListAccount()
+
+  // hiện thị list Account
+ function loadListAccount(){
+   $.ajax({
+          url: '/admin/account/get-data',
+          type: 'GET',
+          contentType: 'application/json',
+          
+          success: function(response) {
+            html(response)
+          },
+          error: function(xhr) {
+            const error = xhr.responseJSON ? xhr.responseJSON.message : 'An error occurred';
+            toastr.error(error, 'Gặp lỗi!')
+          }
+    
+      });
+  }
+  
+  /// Xử lý html để hiển thị
+  function html (data) {
+      var htmls = ""
+     data.forEach((element,index) => {
+        return htmls += ` <tr>
+                        <th scope="row">${index+1}</th>
+                        <td>${element.username}</td>
+                        <td>${element.email}</td>
+                        <td>${element.is_open ? '<span class="btn btn-success " >Đang hoạt động</span>' : '<span class="btn btn-secondary" >Ngưng hoạt động</span>'}</td>
+                        <td>
+                           <div class="input-group mb-3">
+                              <label  class="input-group-text" for="inputGroupSelect01">Hoạt động</label>
+                              <select data-id = ${element._id} class="form-select" id="inputAction">
+                                <option >Lựa chọn</option>
+                                <option value="true">Hoạt động</option>
+                                <option value="false">Ngưng Hoạt động</option>
+                              </select>
+                          </div>
+                           <button type="button" class="btn btn-danger btnDelete" data-id="${element._id}"  data-bs-toggle="modal" data-bs-target="#deleteModal">Xóa</button>  
+                        </td>
+                        
+                        </tr>`
+     }); 
+     document.getElementById("listAccount").innerHTML = htmls
+    var Action = document.querySelectorAll("#inputAction")
+    var btnDelete = document.querySelectorAll(".btnDelete")
+
+      // Lấy ID btn cần Xóa
+        btnDelete.forEach(button => {
+        button.addEventListener('click', (event) => {
+           id = event.target.getAttribute('data-id');
+          console.log('Button clicked with data-id:', id);
+             });
+    });
+
+    // Xử lý đổi trạng thái tài khoản
+    Action.forEach(button => {
+        button.addEventListener('change', (event) => {
+           id = event.target.getAttribute('data-id');
+           console.log(id)
+           var data = event.target.value
+           console.log( data)
+            $.ajax({
+              url: `/admin/account/action/${id}`,
+              type: 'PUT',
+              data: JSON.stringify({is_open : data}), // Chuyển đổi đối tượng JavaScript thành chuỗi JSON
+              contentType: 'application/json', // Đảm bảo header Content-Type được đặt là application/json
+              success: function() {
+                toastr.success('Đổi trạng thái tài khoản thành công');
+                loadListAccount(); // Gọi lại hàm để load danh sách tài khoản sau khi cập nhật thành công
+              },
+              error: function(xhr) {
+                const error = xhr.responseJSON ? xhr.responseJSON.message : 'An error occurred';
+                toastr.error(error, 'Gặp lỗi!');
+              }
+            });
+        });
+    });
+  }
+
+/// Xóa account
+
+ btnDeteleModal.onclick = function(){
+       $.ajax({
+          url: `/admin/account/delete/${id}`,
+          type: 'DELETE',
+          contentType: 'application/json',
+          success: function() {
+            toastr.success('Xóa tài khoản thành công')
+            loadListAccount()
+          },
+          error: function(xhr) {
+            const error = xhr.responseJSON ? xhr.responseJSON.message : 'An error occurred';
+            toastr.error(error, 'Gặp lỗi!')
+          }
+      });
+ }
+
+ })
+
+
+  </script>

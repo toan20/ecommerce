@@ -1,0 +1,140 @@
+<!-- page wrapper -->
+<body>
+
+    <div class="boxed_wrapper">
+       
+
+        <!-- page-title -->
+        <section class="page-title centred">
+            <div class="pattern-layer" style="background-image: url(assets/images/background/page-title.jpg);"></div>
+            <div class="auto-container">
+                <div class="content-box">
+                    <h1>Đơn hàng</h1>
+                    <ul class="bread-crumb clearfix">
+                        <li><i class="flaticon-home-1"></i><a href="/">Trang chủ</a></li>
+                        <li>Đơn hàng</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <!-- page-title end -->
+
+
+        <!-- checkout-section -->
+        <section class="checkout-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 right-column">
+                        <div class="inner-box">
+                            <div class="order-info">
+                                <h4 class="sub-title">Đơn hàng của bạn</h4>
+                                <div class="order-product">
+                                  
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- checkout-section end -->
+
+
+    
+
+
+        <!--Scroll to top-->
+        <button class="scroll-top scroll-to-target" data-target="html">
+            <i class="fas fa-long-arrow-alt-up"></i>
+        </button>
+    </div>
+  
+</body><!-- End of .page_wrapper -->
+<script>
+    document.addEventListener("DOMContentLoaded",function(){
+          function loadcart(){
+            fetch("/order/getvalue",{
+                method : "GET",
+                body : null,
+                headers: {
+                            "Content-Type": "application/json",
+                        },
+            })
+            .then(response => response.json())
+                    .then(data => {
+                        console.log(data)
+                        html(data)
+                    })
+                    .catch(error => console.error("Lỗi:", error));
+            } 
+            loadcart()
+            function html (data){
+                var htmls = ""
+                data.forEach((orders,index) => {
+                    let statusClass = '';
+            switch (orders.status) {
+                case 'Chờ xác nhận':
+                    statusClass = 'btn btn-warning';
+                    break;
+                case 'Đã bị hủy':
+                    statusClass = 'btn btn-danger';
+                    break;
+                case 'Đã xác nhận':
+                    statusClass = 'btn btn-success';
+                    break;
+                default:
+                    statusClass = 'btn btn-warning';
+            }
+            htmls += `
+                <ul class="order-list clearfix">
+                <h3 class = "mt-5"> Đơn hàng #${index + 1} </h3>
+                    <li class="title clearfix">
+                        <p>Sản phẩm</p>
+                        <span>Total</span>
+                        <span class= " mr-5"">Số Lượng</span>
+
+                    </li>`;
+
+            // Iterate through each item in the order
+            orders.items.forEach(item => {
+                htmls += `
+                    <li>
+                        <div class="single-box clearfix">
+                            <img src="${item.produce.img}" alt="${item.produce.name}">
+                            <h6>${item.produce.name}</h6>
+                            <span>${item.produce.priceOld.toLocaleString('vi', {style : 'currency', currency : 'VND'})}</span>
+                            <span class = "mr-5" >${item.quantity}</span>
+
+                        </div>
+                    </li>
+                    `;
+                    
+            });
+
+            htmls += `
+                     <li class="order-total clearfix">
+                        <h6>Ngày đặt hàng</h6>
+                        <span>${formatDateToVietnamese(orders.createdAt)}</span>
+                    </li>
+                      <li class="order-total clearfix">
+                        <h6>Tình trạng đơn hàng</h6>
+                        <span class= " ${statusClass}">${orders.status}</span>
+                    </li>
+                      <li class="order-total clearfix">
+                        <h6>Tổng tiền</h6>
+                        <span>${orders.totalAmount.toLocaleString('vi', {style : 'currency', currency : 'VND'})}</span>
+                    </li>
+                </ul>`;
+        });
+                document.querySelector(".order-product").innerHTML  = htmls
+            }
+            function formatDateToVietnamese(dateString) {
+                const date = new Date(dateString);
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const year = date.getFullYear();
+                return `${day}/${month}/${year}`;
+            }
+    })
+</script>

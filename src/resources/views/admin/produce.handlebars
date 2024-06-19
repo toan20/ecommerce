@@ -1,0 +1,352 @@
+ <body onload="startTime()">
+
+    <!-- tap on top starts-->
+    <div class="tap-top"><i data-feather="chevrons-up"></i></div>
+    <!-- tap on tap ends-->
+    <!-- page-wrapper Start-->
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+   
+      <!-- Page Header Ends                              -->
+      <!-- Page Body Start-->
+      <div class="page-body-wrapper">
+        <!-- Page Sidebar Start-->
+        <div class="sidebar-wrapper">
+          <div>
+            <div class="logo-wrapper"><a href="index.html"><img class="img-fluid for-light" src="../assets/images/logo/logo.png" alt=""><img class="img-fluid for-dark" src="../assets/images/logo/logo_dark.png" alt=""></a>
+              <div class="back-btn"><i class="fa fa-angle-left"></i></div>
+              <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid"> </i></div>
+            </div>
+            <div class="logo-icon-wrapper"><a href="index.html"><img class="img-fluid" src="../assets/images/logo/logo-icon.png" alt=""></a></div>
+            <nav class="sidebar-main">
+              <div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
+              <div id="sidebar-menu">
+                <ul class="sidebar-links" id="simple-bar">
+                  <li class="back-btn"><a href="index.html"><img class="img-fluid" src="../assets/images/logo/logo-icon.png" alt=""></a>
+                    <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
+                  </li>
+                  <li class="sidebar-main-title">
+                    <div>
+                      <a href="/admin/category">
+                      <h6 class="">Quản lý Danh Mục</h6>
+                      </a>
+                    </div>
+                  </li>
+
+                  <li class="sidebar-main-title">
+                    <div>
+                        <a href="/admin/produce">
+                    <h6>Quản Lý Sản Phẩm</h6>
+                        </a>
+                    </div>
+                  </li>
+                    <li class="sidebar-main-title">
+                    <div>
+                        <a href="/admin/account">
+                    <h6>Quản Lý Tài Khoản Admin</h6>
+                        </a>
+                    </div>
+                  </li>
+                  <li class="sidebar-main-title">
+                      <div>
+                      <a href="/admin/order">
+                    <h6>Quản Lý Đơn hàng</h6>
+                      </a>
+                    </div>
+                  </li>
+              </div>
+            </nav>
+          </div>
+        </div>
+        <!-- Page Sidebar Ends-->
+        <div class="page-body">
+          <div class="container-fluid">        
+            <div class="page-title">
+              <div class="row">
+                <div class="col-12">
+                  <h3>Quản lý sản phẩm</h3>
+                </div>
+               <div class="col-12 mt-5">
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Tên sản phẩm</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Nhập tên danh mục">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Hình ảnh</label>
+                        <input type="text" class="form-control" id="img" name="img" >
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Mô tả sản phẩm</label>
+                        <input type="text" class="form-control" id="description" name="description" placeholder="Nhập chi tiết sản phẩm">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Giá</label>
+                        <input type="text" class="form-control" id="price" name="price" placeholder="Nhập giá bán">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Giá khuyến mãi</label>
+                        <input type="text" class="form-control" id="priceOld" name="priceOld" placeholder="Nhập giá khuyến mãi">
+                    </div>
+                     <div class="mb-3">
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="inputGroupSelect01">Danh mục</label>
+                            <select class="form-select" id="category" name="category" >
+                               {{#each categories}}
+                                    <option value="{{this._id}}">{{this.name}}</option>
+                               {{/each}}
+                            </select>
+                            </div>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-create">Thêm sản phẩm</button>
+               </div>
+               <div class="col-12 mt-5">
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tên sản phẩm</th>
+                        <th scope="col">Hình ảnh</th>
+                        <th scope="col">Mô tả sản phẩm</th>
+                        <th scope="col">Giá bán</th>
+                        <th scope="col">Giá khuyến mãi</th>
+                        <th scope="col">Danh mục</th>
+                        <th scope="col">Xử Lý</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listProduce">
+                        {{!-- {{#each produces}}
+                        <tr>
+                        <th scope="row">{{@index}}</th>
+                        <td>{{this.name}}</td>
+                        <td>{{this.img}}</td>
+                        <td>{{this.description}}</td>
+                        <td>{{this.price}}</td>
+                        <td>{{this.priceOld}}</td>
+                        <td>
+                           <button type="button" class="btn btn-info btnUpdate " data-id="{{this._id}}"  data-bs-toggle="modal" data-bs-target="#updateModal">Cập nhật</button>
+                           <button type="button" class="btn btn-danger btnDelete" data-id="{{this._id}}"  data-bs-toggle="modal" data-bs-target="#deleteModal">Xóa</button>  
+                        </td>
+                        
+                        </tr>
+                        {{/each}} --}}
+                    </tbody>
+                </table>
+               </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal"id="deleteModal"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xóa danh mục</h5>
+                    <button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có chắc chắn xóa không ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Thoát</button>
+                    <button type="button" class="btn btn-danger btn-delete" data-bs-dismiss="modal">Xóa</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal"id="updateModal"  tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cập nhật danh mục</h5>
+                    <button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                      <div class="col-12">
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Tên sản phẩm</label>
+                        <input type="text" class="form-control" value="" id="name_edit" name="name_edit" placeholder="Nhập tên danh mục">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Hình ảnh</label>
+                        <input type="text" class="form-control" value="" id="img_edit" name="img_edit" placeholder="Nhập tên danh mục">
+                    </div>
+                     <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Mô tả sản phẩm</label>
+                        <input type="text" class="form-control" value="" id="description_edit" name="description_edit" placeholder="Nhập tên danh mục">
+                    </div>
+                     <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Giá bán</label>
+                        <input type="text" class="form-control" value="" id="price_edit" name="price_edit" placeholder="Nhập tên danh mục">
+                    </div>
+                     <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Giá khuyến mãi</label>
+                        <input type="text" class="form-control" value="" id="priceOld_edit" name="priceOld_edit" placeholder="Nhập tên danh mục">
+                    </div>
+                      <div class="input-group mb-3">
+                            <label class="input-group-text" for="inputGroupSelect01">Danh mục</label>
+                            <select class="form-select" id="category_edit" name="category_edit" >
+                               {{#each categories}}
+                                    <option value="{{this._id}}">{{this.name}}</option>
+                               {{/each}}
+                            </select>
+                            </div>
+               </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Thoát</button>
+                    <button type="button" class="btn btn-danger btn-update" data-bs-dismiss="modal">Cập nhật</button>
+                </div>
+                </div>
+            </div>
+        </div>
+  </body>
+  <script>
+        const btnCreate = document.querySelector(".btn-create")    
+        const btnDeleteModal = document.querySelector(".btn-delete")
+        const btnUpdateModal = document.querySelector(".btn-update")
+        var id
+        btnCreate.onclick = function(){
+            const data = {
+                name        : document.querySelector("#name").value,
+                img         : document.querySelector("#img").value,
+                description : document.querySelector(("#description")).value,
+                price       : document.querySelector("#price").value,
+                priceOld    : document.querySelector("#priceOld").value,
+                category    : document.querySelector(("#category")).value,
+            }
+               fetch("/admin/produce/create",{
+                    method: 'POST',
+                    headers: {
+                    'Content-Type': 'application/json' // Đảm bảo cài đặt kiểu dữ liệu của body là JSON
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(function(){
+                    toastr.success('Thêm sản phẩm thành công')
+                    loadProduce()
+                     document.querySelector("#name").value = ""
+                     document.querySelector("#img").value = ""
+                     document.querySelector(("#description")).value = ""
+                     document.querySelector("#price").value = ""
+                     document.querySelector("#priceOld").value = ""
+                
+                })
+                .catch(function(){
+                    return console.log("lỗi")
+                })
+        }
+       
+    
+        btnDeleteModal.onclick = function(){
+        fetch(`/admin/produce/delete/${id}`,{
+             method: 'DELETE',
+             body : null,
+             headers: {
+                    "Content-Type": "application/json",
+            },
+        })
+        .then(function(){
+            toastr.success('Xóa sản phẩm thành công')
+            loadProduce()
+        })
+        .catch(function(){
+            return console.log("lỗi")
+        })
+    }
+        
+    
+      
+      btnUpdateModal.onclick = function(){
+          var data = {
+            name         : document.getElementById("name_edit").value,
+            img          : document.getElementById("img_edit").value,
+            description  : document.getElementById("description_edit").value,
+            price        : document.getElementById("price_edit").value,
+            priceOld     : document.getElementById("priceOld_edit").value,
+            category     : document.getElementById("category_edit").value
+          }
+    console.log(data)
+        fetch(`/admin/produce/edit/${id}`,{
+              method : "PUT",
+              body : JSON.stringify(data),
+              headers: {
+                            "Content-Type": "application/json",
+                      },
+            })
+        .then(function(){
+            toastr.success('Cập nhật sản phẩm thành công')
+            loadProduce()
+        })
+          .catch(error => {
+              console.error('Lỗi:', error);
+          });
+        }
+       /// load danh mục sản phẩm 
+       loadProduce()
+       function loadProduce(){
+      fetch("/admin/produce/get-data",{
+        method : "GET",
+        body : null,
+        headers: {
+                      "Content-Type": "application/json",
+                 },
+       })
+       .then(response => response.json())
+            .then(data => {
+                
+                html(data)
+            })
+            .catch(error => console.error("Lỗi:", error));
+    }     
+
+    function html (data){
+      var htmls = ""
+      data.forEach((element,index) => {
+        return htmls += `  <tr>
+                        <th scope="row">${index+1}</th>
+                        <td>${element.name}</td>
+                        <td><img src="${element.img}"width="70"  alt=""></td>
+                        <td>${element.description}</td>
+                        <td>${element.price.toLocaleString('vi', {style : 'currency', currency : 'VND'})}</td>
+                        <td>${element.priceOld.toLocaleString('vi', {style : 'currency', currency : 'VND'})}</td>
+                        <td>${element.category.name}</td>
+
+                        <td>
+                           <button type="button" class="btn btn-info btnUpdate " data-id="${element._id}"  data-bs-toggle="modal" data-bs-target="#updateModal">Cập nhật</button>
+                           <button type="button" class="btn btn-danger btnDelete" data-id="${element._id}"  data-bs-toggle="modal" data-bs-target="#deleteModal">Xóa</button>  
+                        </td>
+                        
+                        </tr>`
+      }); 
+      document.getElementById("listProduce").innerHTML = htmls
+      const btnDelete = document.querySelectorAll('.btnDelete');
+      const btnUpdate = document.querySelectorAll(".btnUpdate")
+       btnDelete.forEach(button => {
+        button.addEventListener('click', (event) => {
+           id = event.target.getAttribute('data-id');
+          console.log('Button clicked with data-id:', id);
+             });
+    });
+
+        btnUpdate.forEach(button => {
+        button.addEventListener('click', (event) => {
+           id = event.target.getAttribute('data-id');
+           fetch(`/admin/produce/get-data/${id}`,{
+              method : "GET",
+              body : null,
+              headers: {
+                            "Content-Type": "application/json",
+                      },
+           })
+       .then(response => response.json())
+                .then(data => {
+                  document.getElementById("name_edit").value = data.name
+                  document.getElementById("img_edit").value = data.img
+                  document.getElementById("description_edit").value = data.description
+                  document.getElementById("price_edit").value = data.price
+                  document.getElementById("priceOld_edit").value = data.priceOld
+                })
+                .catch(error => console.error("Lỗi:", error));
+             });
+    });
+     }
+  </script>

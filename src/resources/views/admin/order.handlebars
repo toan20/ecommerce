@@ -1,0 +1,179 @@
+<body onload="startTime()">
+
+    <!-- tap on top starts-->
+    <div class="tap-top"><i data-feather="chevrons-up"></i></div>
+    <!-- tap on tap ends-->
+    <!-- page-wrapper Start-->
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+   
+      <!-- Page Header Ends                              -->
+      <!-- Page Body Start-->
+      <div class="page-body-wrapper">
+        <!-- Page Sidebar Start-->
+        <div class="sidebar-wrapper">
+          <div>
+            <div class="logo-wrapper"><a href="index.html"><img class="img-fluid for-light" src="../assets/images/logo/logo.png" alt=""><img class="img-fluid for-dark" src="../assets/images/logo/logo_dark.png" alt=""></a>
+              <div class="back-btn"><i class="fa fa-angle-left"></i></div>
+              <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid"> </i></div>
+            </div>
+            <div class="logo-icon-wrapper"><a href="index.html"><img class="img-fluid" src="../assets/images/logo/logo-icon.png" alt=""></a></div>
+            <nav class="sidebar-main">
+              <div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
+              <div id="sidebar-menu">
+                <ul class="sidebar-links" id="simple-bar">
+                  <li class="back-btn"><a href="index.html"><img class="img-fluid" src="../assets/images/logo/logo-icon.png" alt=""></a>
+                    <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
+                  </li>
+                  <li class="sidebar-main-title">
+                    <div>
+                      <a href="/admin/category">
+                      <h6 class="">Quản lý Danh Mục</h6>
+                      </a>
+                    </div>
+                  </li>
+
+                  <li  class="sidebar-main-title">
+                    <div>
+                      <a href="/admin/produce">
+                    <h6>Quản Lý Sản Phẩm</h6>
+                      </a>
+                    </div>
+                  </li>
+                    <li class="sidebar-main-title">
+                    <div>
+                      <a href="/admin/account">
+                    <h6>Quản Lý Tài Khoản Admin</h6>
+                      </a>
+                    </div>
+                  </li>
+                  <li class="sidebar-main-title">
+                      <div>
+                      <a href="/admin/order">
+                    <h6>Quản Lý Đơn hàng</h6>
+                      </a>
+                    </div>
+                  </li>
+              </div>
+            </nav>
+          </div>
+        </div>
+        <!-- Page Sidebar Ends-->
+        <div class="page-body">
+          <div class="container-fluid">        
+            <div class="page-title">
+              <div class="row">
+                <div class="col-12">
+                  <h3>Quản lý đơn hàng</h3>
+                </div>
+
+                    <div class=" listOrder row mt-5">
+                        
+                        
+                    </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+  </body>
+  <script>
+    document.addEventListener("DOMContentLoaded",function(){
+           function loadOrder(){
+            fetch("/admin/order/getdata",{
+                method : "GET",
+                body : null,
+                headers: {
+                            "Content-Type": "application/json",
+                        },
+            })
+            .then(response => response.json())
+                    .then(data => {
+                        console.log(data)
+                        html(data)
+                    })
+                    .catch(error => console.error("Lỗi:", error));
+            } 
+    loadOrder()
+    function html(data){
+      var htmls = ""
+      
+        data.forEach((orders,index) => {
+                  let statusClass = '';
+            switch (orders.status) {
+                case 'Chờ xác nhận':
+                    statusClass = 'yellow';
+                    break;
+                case 'Đã bị hủy':
+                    statusClass = 'red';
+                    break;
+                case 'Đã xác nhận':
+                    statusClass = 'green';
+                    break;
+                default:
+                    statusClass = 'btn btn-warning';
+            }
+          htmls += `
+                        <div class="card">
+                         <h2> Đơn hàng #${index + 1}</h2>
+                            <div class="card-header">
+                                <div>
+                                <h4>Tên khách hàng : ${orders.custommer.username} </h4>
+                                <h4> Số điện thoại : ${orders.custommer.phone}</h4>
+                                <h4> Địa chỉ : ${orders.custommer.address}</h4>
+                            </div>
+                    `
+                    orders.items.forEach(item =>{
+                      htmls += `
+                         <li class="sidebar-list"><a class="sidebar-link sidebar-title"><i data-feather="layout"></i><span>Sản phẩm</span></a>
+                                            <ul class="sidebar-submenu">
+                                            <li><img width="100" src="${item.produce.img}" alt=""> <p>${item.produce.name}</p> </li>
+                                            <li><h4> Giá : ${item.produce.priceOld.toLocaleString('vi', {style : 'currency', currency : 'VND'})}</h4></li>
+                                            <li><h4>Số lượng : ${item.quantity}</h4></li>
+                                            </ul>
+                                        </li>
+                      `
+                    })
+                        htmls += `          
+                                    </div>
+                                    <h4>${orders.createdAt}</h4>
+                                    <h4>Tình trạng đơn hàng : <span  style="color: ${statusClass} ;" >${orders.status}</span></h4>
+                                    <div class="mb-3">
+                                        <label for="inputState">Cập nhật tình trạng đơn hàng</label>
+                                        <select data-id = ${orders._id} class="form-control" id="inputState">
+                                        <option selected="">${orders.status}</option>
+                                        <option value="Đã bị hủy">Hủy đơn hàng</option>
+                                        <option value="Đã xác nhận">Xác nhận đơn hàng</option>
+                                        </select>
+                                     </div>
+                                     <h4>Tổng tiền : ${orders.totalAmount.toLocaleString('vi', {style : 'currency', currency : 'VND'})}</h4>
+
+                            </div> 
+                            `
+        })
+        document.querySelector(".listOrder").innerHTML = htmls
+       var btnStatus =   document.querySelectorAll("#inputState")
+         btnStatus.forEach(button => {
+        button.addEventListener('input', (event) => {
+           id = event.target.getAttribute('data-id');
+           var status = { status : event.target.value}
+           console.log(id,status)
+            fetch(`/admin/order/status/${id}`,{
+              method : "PUT",
+              body : JSON.stringify(status),
+              headers: {
+                            "Content-Type": "application/json",
+                      },
+            })
+            .then(function(){
+                toastr.success('Cập nhật trạng thái đơn hàng thành công')
+                loadOrder()
+            })
+            .catch(error => {
+                console.error('Lỗi:', error);
+            });
+        });
+    });
+
+    }
+    })
+  </script>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body onload="startTime()">
+
+    <!-- tap on top starts-->
+    <div class="tap-top"><i data-feather="chevrons-up"></i></div>
+    <!-- tap on tap ends-->
+    <!-- page-wrapper Start-->
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+   
+      <!-- Page Header Ends                              -->
+      <!-- Page Body Start-->
+      <div class="page-body-wrapper">
+        <!-- Page Sidebar Start-->
+        <div class="sidebar-wrapper">
+          <div>
+            <div class="logo-wrapper"><a href="index.html"><img class="img-fluid for-light" src="../assets/images/logo/logo.png" alt=""><img class="img-fluid for-dark" src="../assets/images/logo/logo_dark.png" alt=""></a>
+              <div class="back-btn"><i class="fa fa-angle-left"></i></div>
+              <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid"> </i></div>
+            </div>
+            <div class="logo-icon-wrapper"><a href="index.html"><img class="img-fluid" src="../assets/images/logo/logo-icon.png" alt=""></a></div>
+            <nav class="sidebar-main">
+              <div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
+              <div id="sidebar-menu">
+                <ul class="sidebar-links" id="simple-bar">
+                  <li class="back-btn"><a href="index.html"><img class="img-fluid" src="../assets/images/logo/logo-icon.png" alt=""></a>
+                    <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
+                  </li>
+                  <li class="sidebar-main-title">
+                    <div>
+                      <a href="/admin/category">
+                      <h6 class="">Quản lý Danh Mục</h6>
+                      </a>
+                    </div>
+                  </li>
+
+                  <li class="sidebar-main-title">
+                    <div>
+                      <a href="/admin/produce">
+                    <h6>Quản Lý Sản Phẩm</h6>
+                      </a>
+                    </div>
+                  </li>
+                   <li class="sidebar-main-title">
+                    <div>
+                      <a href="/admin/account">
+                    <h6>Quản Lý Tài Khoản Admin</h6>
+                      </a>
+                    </div>
+                  </li>
+                  <li class="sidebar-main-title">
+                      <div>
+                      <a href="/admin/order">
+                    <h6>Quản Lý Đơn hàng</h6>
+                      </a>
+                    </div>
+                  </li>
+              </div>
+            </nav>
+          </div>
+        </div>
+        <!-- Page Sidebar Ends-->
+        <div class="page-body">
+          <div class="container-fluid">        
+            <div class="page-title">
+              <div class="row">
+                <div class="col-12">
+                  <h3>Quản lý danh mục</h3>
+                </div>
+               <div class="col-12 mt-5">
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Tên danh mục</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Nhập tên danh mục">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Hình ảnh</label>
+                        <input type="text" class="form-control" id="img" name="img" placeholder="Nhập tên danh mục">
+                    </div>
+                    <button type="button" class="btn btn-primary btn-create">Thêm danh mục</button>
+               </div>
+               <div class="col-12 mt-5">
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tên danh mục</th>
+                        <th scope="col">Hình ảnh</th>
+                        <th scope="col">Xử Lý</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listCategory">
+                        {{!-- {{#each category}}
+                        <tr>
+                        <th scope="row">{{@index}}</th>
+                        <td>{{this.name}}</td>
+                        <td>{{this.img}}</td>
+                        <td>
+                           <button type="button" class="btn btn-info btnUpdate" data-id="{{this._id}}"  data-bs-toggle="modal" data-bs-target="#updateModal">Cập nhật</button>
+                           <button type="button" class="btn btn-danger btnDelete" data-id="{{this._id}}"  data-bs-toggle="modal" data-bs-target="#deleteModal">Xóa</button>  
+                        </td>
+                        
+                        </tr>
+                        {{/each}} --}}
+                    </tbody>
+                </table>
+               </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal"id="deleteModal"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xóa danh mục</h5>
+                    <button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có chắc chắn xóa không ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Thoát</button>
+                    <button type="button" class="btn btn-danger btn-delete" data-bs-dismiss="modal">Xóa</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal"id="updateModal"  tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cập nhật danh mục</h5>
+                    <button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                      <div class="col-12">
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Tên danh mục</label>
+                        <input type="text" class="form-control" value="" id="name_edit" name="name_edit" placeholder="Nhập tên danh mục">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Hình ảnh</label>
+                        <input type="text" class="form-control" value="" id="img_edit" name="img_edit" placeholder="Nhập tên danh mục">
+                    </div>
+               </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Thoát</button>
+                    <button type="button" class="btn btn-danger btn-update" data-bs-dismiss="modal">Cập nhật</button>
+                </div>
+                </div>
+            </div>
+        </div>
+  </body>
+  <script>
+    var btnCreate = document.querySelector(".btn-create")
+    var btnDeteleModal = document.querySelector(".btn-delete")
+    let btnDelete
+    var btnUpdate 
+    var id 
+    var btnUpdateModal = document.querySelector(".btn-update")
+    var listCategory = document.querySelector("#listCategory")
+    // Thêm danh mục
+    loadCategory()
+
+    btnCreate.onclick = function(){
+        var data = {
+            name : document.querySelector("#name").value,
+            img  : document.querySelector("#img").value
+        }
+        fetch("/admin/category/create",{
+             method: 'POST',
+             headers: {
+        'Content-Type': 'application/json' // Đảm bảo cài đặt kiểu dữ liệu của body là JSON
+            },
+            body: JSON.stringify(data)
+        })
+        .then(function(){
+          toastr.success('Thêm mới danh mục thành công')
+          document.querySelector("#name").value = ""
+           document.querySelector("#img").value = ""
+          loadCategory()
+        })
+        .catch(function(){
+            return console.log("lỗi")
+        })
+    }
+
+    // Xóa danh mục
+    btnDeteleModal.onclick = function(){
+        fetch(`/admin/category/delete/${id}`,{
+             method: 'DELETE',
+             body : null,
+             headers: {
+                    "Content-Type": "application/json",
+            },
+        })
+        .then(function(){
+          toastr.success('Xóa danh mục thành công')
+           loadCategory()
+        })
+        .catch(function(){
+            return console.log("lỗi")
+        })
+    }
+    
+    btnUpdateModal.onclick = function(){
+    var data = {
+      name         : document.getElementById("name_edit").value,
+      img          : document.getElementById("img_edit").value,
+    }
+    console.log(data)
+   fetch(`/admin/category/edit/${id}`,{
+        method : "PUT",
+        body : JSON.stringify(data),
+        headers: {
+                      "Content-Type": "application/json",
+                 },
+      })
+   .then(function(){
+    toastr.success('Cập nhật danh mục thành công')
+      loadCategory()
+   })
+    .catch(error => {
+        console.error('Lỗi:', error);
+    });
+ }
+    // load list danh mục
+    function loadCategory(){
+      fetch("/admin/category/get-data",{
+        method : "GET",
+        body : null,
+        headers: {
+                      "Content-Type": "application/json",
+                 },
+       })
+       .then(response => response.json())
+            .then(data => {
+                
+                html(data)
+            })
+            .catch(error => console.error("Lỗi:", error));
+    }
+    
+    function html (data){
+      var htmls = ""
+     data.forEach((element,index) => {
+        return htmls += ` <tr>
+                        <th scope="row">${index+1}</th>
+                        <td>${element.name}</td>
+                        <td><img src="${element.img}"width="70"  alt=""></td>
+                        <td>
+                           <button type="button" class="btn btn-info btnUpdate" data-id="${element._id}"  data-bs-toggle="modal" data-bs-target="#updateModal">Cập nhật</button>
+                           <button type="button" class="btn btn-danger btnDelete" data-id="${element._id}"  data-bs-toggle="modal" data-bs-target="#deleteModal">Xóa</button>  
+                        </td>
+                        
+                        </tr>`
+     }); 
+     listCategory.innerHTML = htmls
+      btnDelete = document.querySelectorAll(".btnDelete")
+      btnUpdate = document.querySelectorAll(".btnUpdate")
+       btnDelete.forEach(button => {
+        button.addEventListener('click', (event) => {
+           id = event.target.getAttribute('data-id');
+          console.log('Button clicked with data-id:', id);
+             });
+    });
+    /////////////////////////////
+  btnUpdate.forEach(button => {
+        button.addEventListener('click', (event) => {
+           id = event.target.getAttribute('data-id');
+          console.log('Button clicked with data-id:', id);
+            fetch(`/admin/category/get-data/${id}`,{
+        method : "GET",
+        body : null,
+        headers: {
+                      "Content-Type": "application/json",
+                 },
+       })
+       .then(response => response.json())
+                .then(data => {
+                  document.getElementById("name_edit").value = data.name
+                  document.getElementById("img_edit").value = data.img
+                })
+                .catch(error => console.error("Lỗi:", error));
+             });
+    });
+    }
+    
+  </script>
+</html>

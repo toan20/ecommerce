@@ -1,0 +1,239 @@
+<body>
+       <div class="boxed_wrapper">
+
+
+        <!-- page-title -->
+        <section class="page-title centred">
+            <div class="pattern-layer" style="background-image: url(assets/images/background/page-title.jpg);"></div>
+            <div class="auto-container">
+                <div class="content-box">
+                    <h1>Giỏ hàng</h1>
+                    <ul class="bread-crumb clearfix">
+                        <li><i class="flaticon-home-1"></i><a href="/">Trang chủ</a></li>
+                        <li>Giỏ hàng</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <!-- page-title end -->
+
+
+        <!-- cart section -->
+        <section class="cart-section cart-page">
+            <div class="auto-container">
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 table-column">
+                        <div class="table-outer">
+                            <table class="cart-table">
+                                <thead class="cart-header">
+                                    <tr>
+                                        <th>&nbsp;</th>
+                                        <th class="prod-column">Tên sản phẩm</th>
+                                        <th>&nbsp;</th>
+                                        <th>&nbsp;</th>
+                                        <th class="price">Giá</th>
+                                        <th>Giá Khuyến mãi</th>
+                                        <th class="quantity">Số lượng</th>
+                                        <th>Tổng</th>
+                                    </tr>    
+                                </thead>
+                                <tbody id="listCart">
+                                 
+                                 
+                                   
+                                </tbody>   
+                            </table>
+                                <p id="message" style="text-align: center; font-size: larger;color: red;"></p> 
+                        </div>
+                    </div>
+                </div>
+             
+                <div class="cart-total">
+                    <div class="row">
+                         <div class=" mt-5 col-xl-5 col-lg-12 col-md-5 offset-xl-1 cart-column">
+                            <div class="total-cart-box clearfix">
+                                <h4>Tổng giỏ hàng</h4>
+                                <ul class="list clearfix">
+                                    <li>Tổng tiền:<span class="total"></span></li>
+                                </ul>
+                                <a id="order" aria-disabled="true" class="theme-btn-two disabled">Đặt hàng<i class="flaticon-right-1"></i></a>
+                            </div>
+                        </div>
+                            <div class=" mt-5 col-xl-5 col-lg-12 col-md-5 offset-xl-1 cart-column">
+                            <div class="total-cart-box clearfix">
+                                <h4>Thông tin giao hàng</h4>
+                                <ul class="list clearfix">
+                                    <li>Tên người nhận:<span class="name"></span></li>
+                                    <li>Số điện thoại  người nhận:<span class="phone"></span></li>
+                                    <li>Địa chỉ giao hàng:<span class="address"></span></li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                   <div class="othre-content clearfix">
+                    <div class="coupon-box pull-left clearfix">
+                        <input type="text" placeholder="Enter coupon code...">
+                        <button type="submit"  class="theme-btn-two">Apply coupon<i class="flaticon-right-1"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- cart section end -->
+
+
+
+        <!--Scroll to top-->
+        <button class="scroll-top scroll-to-target" data-target="html">
+            <i class="fas fa-long-arrow-alt-up"></i>
+        </button>
+    </div>
+
+</body>
+<script>
+     document.addEventListener('DOMContentLoaded', function() {
+     function loadcart(){
+      fetch("/cart/store",{
+        method : "GET",
+        body : null,
+        headers: {
+                      "Content-Type": "application/json",
+                 },
+       })
+       .then(response => response.json())
+            .then(data => {
+                document.querySelector(".name").innerHTML = data.username
+                document.querySelector(".phone").innerHTML = data.phone
+                document.querySelector(".address").innerHTML = data.address
+                html(data)
+            })
+            .catch(error => console.error("Lỗi:", error));
+    }     
+    loadcart()
+
+    function html(data){
+         var htmls = ""
+         var tototalAmount 
+         if (data.cart.length === 0) {
+          document.querySelector("#message").innerHTML = 'Giỏ hàng của bạn đang trống';
+           document.getElementById("order").setAttribute('aria-disabled', 'true'); // Vô hiệu hóa lại nút
+            document.getElementById("order").classList.add('disabled');
+        }else{
+            document.getElementById("order").removeAttribute('aria-disabled');
+            document.getElementById("order").classList.remove('disabled');
+            totalAmount = 0
+            data.cart.map(item=>{
+                 const itemTotal = item.produce.priceOld * item.quantity;
+                        totalAmount += itemTotal;
+            return htmls += `   
+            <tr>
+           
+                <td colspan="4" class="prod-column">
+                    <div class="column-box">
+                        <div data-id = "${item.produce._id}" class="remove-btn">
+                            <i class="flaticon-close"></i>
+                        </div>
+                        <div class="prod-thumb">
+                            <a href="#"><img src="${item.produce.img}" alt=""></a>
+                        </div>
+                        <div class="prod-title">
+                            ${item.produce.name}
+                        </div>    
+                    </div>
+                </td>
+                <td class="price">${item.produce.price.toLocaleString('vi', {style : 'currency', currency : 'VND'})}</td>
+                 <td class="price">${item.produce.priceOld.toLocaleString('vi', {style : 'currency', currency : 'VND'})}</td>
+                <td class="qty">
+                    <div class="item-quantity">
+                        <input data-id = ${item.produce._id} id = "quantity" class="quantity-spinner" type="number" min = "1" value="${item.quantity}" name="quantity">
+                    </div>
+                </td>
+                <td class="sub-total">${itemTotal.toLocaleString('vi', {style : 'currency', currency : 'VND'})}</td>
+            </tr>`
+         })
+        }
+        document.getElementById("listCart").innerHTML = htmls
+        document.querySelector(".total").innerHTML = totalAmount.toLocaleString('vi', {style : 'currency', currency : 'VND'})
+      var btnDelete =  document.querySelectorAll(".remove-btn")
+     
+         btnDelete.forEach(button => {
+        button.addEventListener('click', (event) => {
+           
+         var cartItem = event.target.closest('.remove-btn');
+                    var id = cartItem.getAttribute('data-id');
+                    console.log('Button clicked with data-id:', id);
+
+           fetch(`/cart/delete/${id}`,{
+             method: 'DELETE',
+             body : null,
+             headers: {
+                    "Content-Type": "application/json",
+            },
+        })
+        .then(function(){
+            toastr.success('Xóa sản phẩm thành công')
+             loadcart()
+        })
+        .catch(function(){
+            return console.log("lỗi")
+        })
+             });
+    });
+
+     var btnQuantity = document.querySelectorAll(".quantity-spinner")
+        btnQuantity.forEach(button => {
+            button.addEventListener("input",(event)=>{
+            var id = button.getAttribute("data-id")
+            var quantity = Number(button.value)
+                var data = {quantity} 
+                 fetch(`/cart/quantity/${id}`,{
+                    method : "PUT",
+                    body : JSON.stringify(data),
+                    headers: {
+                                    "Content-Type": "application/json",
+                             },
+                })
+                .then(function(){
+                    toastr.success('Cập nhật giỏ hàng thành công')
+                    loadcart()
+                })
+                .catch(error => {
+                    console.error('Lỗi:', error);
+                });
+            })
+        })
+  
+     document.getElementById("order").onclick = function(){
+         if (this.getAttribute('aria-disabled') === 'true') {
+                event.preventDefault(); // Ngăn chặn hành động mặc định nếu nút bị vô hiệu hóa
+                toastr.warning('Chưa có sản phẩm trong giỏ hàng')
+            } else {
+                var order = {
+                    custommerId : data._id,
+                    items       : data.cart,
+                    totalAmount : totalAmount
+                }
+                console.log(order)
+                console.log(data)
+                   fetch("/order",{
+                    method: 'POST',
+                    headers: {
+                    'Content-Type': 'application/json' // Đảm bảo cài đặt kiểu dữ liệu của body là JSON
+                    },
+                    body: JSON.stringify(order)
+                })
+                .then(function(){
+                   window.location.href = "/order/view"
+                })
+                .catch(function(){
+                    return console.log("lỗi")
+                })
+            }
+     }
+    } 
+
+     });
+
+
+</script>

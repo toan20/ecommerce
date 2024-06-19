@@ -1,0 +1,214 @@
+<body>
+     <!-- page-title -->
+        <section class="page-title centred">
+            <div class="pattern-layer" style="background-image: url(assets/images/background/page-title.jpg);"></div>
+            <div class="auto-container">
+                <div class="content-box">
+                    <h1>Đăng ký tài khoản</h1>
+                    <ul class="bread-crumb clearfix">
+                        <li><i class="flaticon-home-1"></i><a href="/">Trang chủ</a></li>
+                        <li>Đăng ký tài khoản</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <!-- page-title end -->
+         <section class="myaccount-section">
+            <div class="auto-container">
+                <div class="row clearfix">
+                
+                    <div class="col-lg-12 col-md-12 col-sm-12 inner-column">
+                        <div class="inner-box signup-inner">
+                            <div class="upper-inner">
+                                <h3>Đăng ký tài khoản</h3>
+                            </div>
+                            <form id="form-register" method="post" class="default-form">
+                                <div class="form-group">
+                                    <label>Họ và Tên</label>
+                                    <input id="name" type="text" name="name" required="">
+                                    <p class="form-message"></p>
+                                </div>
+                                <div class="form-group">
+                                    <label>Địa chỉ Email</label>
+                                    <input id="email" type="email" name="email" required="">
+                                    <p class="form-message"></p>
+                                </div>
+                                 <div class="form-group">
+                                    <label>Số điện thoại</label>
+                                    <input id="phone" type="text" name="phone" required="">
+                                    <p class="form-message"></p>
+                                </div>
+                                <div class="form-group">
+                                    <label>Mật khẩu</label>
+                                    <input id="password" type="password" name="password" required="">
+                                    <p class="form-message"></p>
+                                </div>
+                                 <div class="form-group">
+                                    <label> Nhập lại mật khẩu</label>
+                                    <input id="password_confirmation" type="password" name="password" required="">
+                                    <p class="form-message"></p>
+                                </div>
+                                <div class="form-group">
+                                    <label> Địa chỉ</label>
+                                    <input id="address" type="text" name="password" required="">
+                                    <p class="form-message"></p>
+                                </div>
+                                <div class="form-group">
+                                    <div class="custom-controls-stacked">
+                                        <label class="custom-control material-checkbox">
+                                            <input type="checkbox" class="material-control-input">
+                                            <span class="material-control-indicator"></span>
+                                            <span class="description">I agree to terms & Policy.</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="theme-btn-two">Sign Up<i class="flaticon-right-1"></i></button>
+                                </div>
+                            </form>
+                            <div class="lower-inner centred">
+                                <span>or</span>
+                                <ul class="social-links clearfix">
+                                    <li><a href="my-account.html"><i class="fab fa-facebook-f"></i>Facebook</a></li>
+                                    <li><a href="my-account.html"><i class="fab fa-google-plus-g"></i>Google</a></li>
+                                </ul>
+                                <p>Bạn đã có tài khoản ? <a href="/login">Đăng nhập ngay</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+</body>
+<script>
+    function Validator(option) {
+  const formElement = document.getElementById(option.form);
+  function validate(inputElement, rulle) {
+    var errorMessage = rulle.test(inputElement.value);
+    var errorElement =
+      inputElement.parentElement.querySelector(".form-message");
+    if (errorMessage) {
+      errorElement.innerText = errorMessage;
+      errorElement.style.color = "red";
+      inputElement.style.borderColor = "red";
+    } else {
+      errorElement.innerText = " ";
+      inputElement.style.borderColor = "green";
+    }
+    return errorMessage;
+  }
+
+  if (formElement) {
+    formElement.onsubmit = function (e) {
+      e.preventDefault();
+      var isError = true;
+      option.rulles.forEach(function (rulle) {
+        var inputElement = formElement.querySelector(rulle.selection);
+        var isVlaid = validate(inputElement, rulle);
+        if (isVlaid) {
+          // console.log(isVlaid);
+          isError = false;
+        }
+      });
+      if (isError) {
+        var data = {
+          username: document.querySelector("#name").value,
+          email: document.querySelector("#email").value,
+          password: document.querySelector("#password").value,
+          address : document.querySelector("#address").value,
+          phone : document.querySelector("#phone").value
+        };
+        console.log(data);
+        $.ajax({
+          url: '/register',
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify(data),
+          success: function(response) {
+            toastr.success('Tạo tài khoản thành công')
+            window.location.href = "/login";
+          },
+          error: function(xhr) {
+            const error = xhr.responseJSON ? xhr.responseJSON.message : 'An error occurred';
+            toastr.error(error, 'Gặp lỗi!')
+          }
+      });
+      } else {
+      }
+    };
+    option.rulles.forEach(function (rulle) {
+      var inputElement = formElement.querySelector(rulle.selection);
+      if (inputElement) {
+        inputElement.onblur = function () {
+          // console.log(inputElement);
+          validate(inputElement, rulle);
+        };
+      }
+    });
+  }
+}
+Validator.isRequỉed = function (selection) {
+  return {
+    selection: selection,
+    test: function (value) {
+      if (value) {
+        return undefined;
+      } else {
+        return "Vui lòng nhập trường này";
+      }
+    },
+  };
+};
+Validator.isEmail = function (selection) {
+  return {
+    selection: selection,
+    test: function (value) {
+      var regex =
+        /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+      if (regex.test(value)) {
+        return undefined;
+      } else {
+        return "Trường này nhập Email";
+      }
+    },
+  };
+};
+Validator.minLenght = function (selection, min) {
+  return {
+    selection: selection,
+    test: function (value) {
+      if (value.length >= min) {
+        return undefined;
+      } else {
+        return `Vui lòng nhập ${min} ký tự`;
+      }
+    },
+  };
+};
+Validator.isConfirmed = function (selection, getConfirmValue) {
+  return {
+    selection: selection,
+    test: function (value) {
+      if (value === getConfirmValue()) {
+        return undefined;
+      } else {
+        return "Mật khẩu không trùng nhau";
+      }
+    },
+  };
+};
+Validator({
+  form: "form-register",
+  rulles: [
+    Validator.isRequỉed("#phone"),
+    Validator.isRequỉed("#address"),
+    Validator.isRequỉed("#name"),
+    Validator.isEmail("#email"),
+    Validator.minLenght("#password", 6),
+    Validator.isConfirmed("#password_confirmation", function () {
+      return document.querySelector("#password").value;
+    }),
+  ],
+});
+
+</script>
